@@ -74,7 +74,8 @@ class StructureParser:
         # Status member variables
         self.current_chain = "%"
         self.resct = 0
-
+        self.atmct = 0
+        self.current_residue = -999
 
     def on_atom(self, event):
         if self.model is None:
@@ -82,7 +83,7 @@ class StructureParser:
             # statement, create model 1
             self._new_model(1)
         #.
-        
+
         t = p.atom(event.data)
         self.atmct += 1
         resnum = t[7]
@@ -117,16 +118,16 @@ class StructureParser:
 
     def finish(self):
         # OBS Need to terminate chain, residue, etc. defs
-        print ("Finish...") 
+        print ("Finish...")
         cid_prev = "%"
         for r in self.residues:
-            
+            pass
+        #.
 
 #.
 
 
 def pdbparser(fnam, mode='mini'):
-
     handler = StructureParser()
     handler.mode = mode
 
