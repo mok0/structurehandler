@@ -1,8 +1,8 @@
 import gzip
 import numpy as np
 
-import parse_pdb as p
-from eventdispatcher import EventDispatcher, Event
+from . import parse_pdb as p
+from .eventdispatcher import EventDispatcher, Event
 
 atmrec = [
     ('resnum', 'i4'),
@@ -97,8 +97,8 @@ class StructureParser:
 
 
 def pdbparser(fnam, mode='mini'):  
-    from structurehandler import StructureHandler
-    from model import Model
+    from .structurehandler import StructureHandler
+    from .model import Model
 
     parser = StructureParser()
     parser.mode = mode
@@ -137,9 +137,9 @@ def pdbparser(fnam, mode='mini'):
     dispatcher.remove_event_listener("HETATM", parser.on_atom)
     dispatcher.remove_event_listener("END", parser.on_end)
 
-    # Populate the StructureHandler instance
+    # Create a StructureHandler instance and populate it
+    # with the models discovered by the parser.
     s = StructureHandler()
-
     for m in parser.models:
         model = Model(m.name, np.array(m.residues), np.array(m.atoms))
         s.add(m)

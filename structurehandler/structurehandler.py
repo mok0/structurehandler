@@ -23,6 +23,7 @@ class StructureHandler:
     def add(self, model):
         self.models.append(model)
         self.model = model
+    #.
 
     def use_model(self, n):
         if n not in self.names:

@@ -1,8 +1,8 @@
 import gzip
 import numpy as np
 
-import parse_pdb as p
-from eventdispatcher import EventDispatcher, Event
+from structurehandler import parse_pdb as p
+from structurehandler.eventdispatcher import EventDispatcher, Event
 
 atmrec = [
     ('resnum', 'i4'),
