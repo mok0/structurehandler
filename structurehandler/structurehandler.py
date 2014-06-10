@@ -1,11 +1,24 @@
 class StructureHandler:
-    def __init__(self, models):
-        self.models = models
-        self.names = {i.name:i for i in self.models}
-        self.model = models[0]
-        self.atoms = self.model.atoms
-        self.residues = self.model.residues
-        self.chains = self.model.chains
+    def __init__(self):
+        self.models = []
+        self.model = None
+        self.names = []
+
+
+    @property
+    def atoms():
+        if self.model: return self.model.atoms
+    #.
+
+    @property
+    def residues():
+        if self.model: return self.residues
+    #.
+
+    @property
+    def chains():
+        if self.model: return self.model.chains
+    #.
 
     def add(self, model):
         self.models.append(model)
