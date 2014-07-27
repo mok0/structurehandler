@@ -4,44 +4,25 @@
 import collections
 from .residue import Residue
 
-class Chain(dict):
+class Chain(collections.OrderedDict):
     def __init__(self, name, residues, atoms):
+        super(Chain, self).__init__()
         self.name = name
         self.atoms = atoms
-        self.store = collections.OrderedDict()
         for r in residues:
             atmlist = atoms[atoms['resnum'] == r[1]]
-            self.store[r[1]] = Residue(r, atmlist)
+            self[r[1]] = Residue(r, atmlist)
+
+    @property
+    def residues(self):
+        return list(self.values())
+    #.
+
 
     # Special methods
 
     def __repr__(self):
         s = "<Chain {}; residues: {}; atoms: {}>"
-        return s.format(self.name, len(self.store), len(self.atoms))
-    #.
-
-    def __getitem__(self, key):
-        return self.store[key]
-    #.
-
-    def __setitem__(self, key, value):
-        self.store[key] = value
-    #.
-
-    def __delitem__(self, key):
-        del self.store[key]
-    #.
-
-    def __iter__(self):
-        return iter(self.store)
-    #.
-
-    def __len__(self):
-        return len(self.store)
-    #.
-
-    def __contains__(self, key):
-         "True if there is a child element with the given key."
-         return key in self.store
+        return s.format(self.name, len(self), len(self.atoms))
     #.
 #.
