@@ -35,22 +35,5 @@ class Residue(dict):
     def __repr__(self):
         return "<Residue {} ({})>".format (self.name, self.type)
     #.
-
-    # def __getitem__(self, key):
-    #     return self[key.upper()]
-    # #.
-
-    # def __setitem__(self, key, value):
-    #     self[key.upper()] = value
-    # #.
-
-    # def __delitem__(self, key):
-    #     del self[key.upper()]
-    # #.
-
-    # def __contains__(self, key):
-    #     "True if there is a child element with the given key."
-    #     return key.upper() in self
-    # #.
 #.
 
