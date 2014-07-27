@@ -2,30 +2,48 @@
 # container, equivalent to the MODEL entity of the PDB file. A model
 # can contain several chains.
 
+
 class Model:
     def __init__(self, name, residues, atoms):
         self.name = name
         self.residues = residues # __class__.__name__ == 'ndarray'
         self.atoms = atoms
-        self.chains = {}
-        # Populate self.chains, an index into the residues array.
-        cid_current = self.residues['cid'][0]
-        res_beg = 0
-        resct = -1
-        for r in self.residues:
-            resct += 1
-            cid = r['cid']
-            if cid != cid_current:
-                cid_current = cid
-                self.chains[cid] = (cid, res_beg, resct)
-                res_beg = resct
-            #.
-        #.
+        self.cids = set(residues['cid']) # set of chain ids found in model
+        # self.chains = {}
+
+
+        # for x in self.cids:
+
+        #     # Populate self.chains, an index into the residues array.
+
+        #     reslist = self.residues[self.residues['cid'] == x]
+        #     atmlist = self.atoms[self.atoms['cid'] == x]
+        #     self.chains[x] = Chain(x, reslist, atmlist)
+        # #.
     #.
 
     def __repr__(self):
-        s = "<ModelList {} chains: {} residues: {} atoms: {}>"
-        return s.format(self.name, len(self.chains), len(self.residues), len(self.atoms))
-
+        s = "<Model {}; chains: {}; residues: {}; atoms: {}>"
+        return s.format(self.name, len(self.cids), len(self.residues), len(self.atoms))
     #.
 #.
+
+from .chain import Chain
+
+# The CRAtree object contains a hierachy of chain, residue and atom objects.
+
+class CRAtree:
+    def __init__(self, model):
+
+        self.chains = {}
+
+        for x in model.cids:
+
+            # Populate self.chains, an index into the residues array.
+
+            reslist = model.residues[model.residues['cid'] == x]
+            atmlist = model.atoms[model.atoms['cid'] == x]
+            self.chains[x] = Chain(x, reslist, atmlist)
+        #.
+    #.
+#

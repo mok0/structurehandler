@@ -6,17 +6,17 @@ class StructureHandler:
 
 
     @property
-    def atoms():
+    def atoms(self):
         if self.model: return self.model.atoms
     #.
 
     @property
-    def residues():
-        if self.model: return self.residues
+    def residues(self):
+        if self.model: return self.model.residues
     #.
 
     @property
-    def chains():
+    def chains(self):
         if self.model: return self.model.chains
     #.
 

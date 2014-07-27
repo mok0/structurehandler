@@ -5,6 +5,7 @@ from . import parse_pdb as p
 from .eventdispatcher import EventDispatcher, Event
 
 atmrec = [
+    ('cid', 'U1'),
     ('resnum', 'i4'),
     ('name', '<U4'),
     ('altloc', 'U1'),
@@ -33,6 +34,7 @@ class ModelList:
         return s.format(self.name, len(self.chains), len(self.residues), len(self.atoms))
     #.
 #.
+
 class StructureParser:
     def __init__(self):
         self.mode = 'mini'
@@ -64,13 +66,13 @@ class StructureParser:
         atmnam = t[2]+t[3]
         atmnam = atmnam.strip()
 
-        #      resnum, atmnam, altloc, coords, occ,  bfactor
-        atm = (resnum, atmnam, t[4], t[9:12], t[12], t[13])
+        #      cid, resnum, atmnam, altloc, coords, occ,  bfactor
+        atm = (t[6], resnum, atmnam, t[4], t[9:12], t[12], t[13])
 
         if self.current_residue != resnum:
             # Pack residue record
             #     cid, resnum, restyp, inscod, hetatm)
-            res = (t[6], resnum, t[5], t[6], t[0])
+            res = (t[6], resnum, t[5], t[8], t[0])
             self.model.residues.append(np.array(res,dtype=resrec))
             self.current_residue = resnum
             self.resct += 1
@@ -142,7 +144,7 @@ def pdbparser(fnam, mode='mini'):
     s = StructureHandler()
     for m in parser.models:
         model = Model(m.name, np.array(m.residues), np.array(m.atoms))
-        s.add(m)
+        s.add(model)
     #.
     return s
 #
