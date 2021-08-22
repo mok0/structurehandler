@@ -3,6 +3,7 @@
 
 import collections
 from .residue import Residue
+from .deprecated import deprecated
 
 class Chain(collections.OrderedDict):
     def __init__(self, name, residues, atoms):
@@ -18,6 +19,20 @@ class Chain(collections.OrderedDict):
         return list(self.values())
     #.
 
+    @deprecated
+    def child_list(self):
+        return self.residues
+
+    @deprecated
+    def child_dict(self):
+        return {k: v for k,v in self.items()}
+    #.
+
+    def get_sequence(self):
+        # Return the residue sequence as a list of strings
+        return [res.type for res in self.values()]
+    #.
+
 
     # Special methods
 
@@ -26,3 +41,6 @@ class Chain(collections.OrderedDict):
         return s.format(self.name, len(self), len(self.atoms))
     #.
 #.
+
+
+

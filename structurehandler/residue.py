@@ -1,9 +1,10 @@
 import collections
 from .atom import Atom
+from .deprecated import deprecated
 
-class Residue(dict):
+class Residue(collections.OrderedDict):
     """
-    Class representing a residue. Behaves like a dictionary, 
+    Class representing a residue. Behaves like a dictionary,
     with atom names as keys.
     """
     def __init__(self, rrec, atmlist):
@@ -28,6 +29,15 @@ class Residue(dict):
     @property
     def atoms(self):
         return list(self.values())
+    #.
+
+    @deprecated
+    def child_list(self):
+        return self.atoms
+
+    @deprecated
+    def child_dict(self):
+        return {k: v for k,v in self.items()}
     #.
 
     # Special methods
